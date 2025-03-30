@@ -1,0 +1,13 @@
+CREATE TABLE `orders` (
+    `order_id` int NOT NULL AUTO_INCREMENT COMMENT 'Primary Key',
+    `user_id` int NOT NULL COMMENT 'user id who placed the order',
+    `total_price` decimal(10, 2) NOT NULL,
+    `order_status` varchar(50) NOT NULL,
+    `order_date` datetime NOT NULL COMMENT 'date and time when the order was placed',
+    `shipped_date` datetime DEFAULT NULL COMMENT 'date when the order was shipped',
+    `payment_status` varchar(50) NOT NULL COMMENT 'paid or pending',
+    `payment_method` varchar(50) DEFAULT NULL COMMENT 'credit card or bit',
+    PRIMARY KEY (`order_id`),
+    KEY `user_id` (`user_id`),
+    CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user-id`)
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci

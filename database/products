@@ -1,0 +1,9 @@
+CREATE TABLE `products` (
+    `product_id` int NOT NULL AUTO_INCREMENT,
+    `product_name` varchar(255) NOT NULL,
+    `description` text,
+    `price` decimal(10, 2) NOT NULL,
+    `created_at` datetime DEFAULT NULL COMMENT 'Date and time when the product was added to the system',
+    `updated_at` datetime DEFAULT NULL COMMENT '	Date and time when the product data was last updated',
+    PRIMARY KEY (`product_id`)
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci

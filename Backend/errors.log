@@ -1,0 +1,30 @@
+Time: Wed Dec 04 2024 19:15:48 GMT+0200 (Israel Standard Time)
+Message: Request failed with status code 400
+Stack: AxiosError: Request failed with status code 400
+    at settle (C:\Users\shlom\Documents\image-grnerator\Backend\node_modules\axios\lib\core\settle.js:19:12)
+    at IncomingMessage.handleStreamEnd (C:\Users\shlom\Documents\image-grnerator\Backend\node_modules\axios\lib\adapters\http.js:599:11)
+    at IncomingMessage.emit (node:events:531:35)
+    at IncomingMessage.emit (node:domain:488:12)
+    at endReadableNT (node:internal/streams/readable:1696:12)
+    at processTicksAndRejections (node:internal/process/task_queues:82:21)
+    at Axios.request (C:\Users\shlom\Documents\image-grnerator\Backend\node_modules\axios\lib\core\Axios.js:45:41)
+    at processTicksAndRejections (node:internal/process/task_queues:95:5)
+---------------------------------------
+
+Time: Wed Dec 04 2024 19:25:43 GMT+0200 (Israel Standard Time)
+Message: getaddrinfo EAI_AGAIN api.openai.com
+Stack: Error: getaddrinfo EAI_AGAIN api.openai.com
+    at Function.AxiosError.from (C:\Users\shlom\Documents\image-grnerator\Backend\node_modules\axios\lib\core\AxiosError.js:92:14)
+    at RedirectableRequest.handleRequestError (C:\Users\shlom\Documents\image-grnerator\Backend\node_modules\axios\lib\adapters\http.js:620:25)
+    at RedirectableRequest.emit (node:events:519:28)
+    at RedirectableRequest.emit (node:domain:488:12)
+    at ClientRequest.eventHandlers.<computed> (C:\Users\shlom\Documents\image-grnerator\Backend\node_modules\follow-redirects\index.js:49:24)
+    at ClientRequest.emit (node:events:519:28)
+    at ClientRequest.emit (node:domain:488:12)
+    at TLSSocket.socketErrorListener (node:_http_client:500:9)
+    at TLSSocket.emit (node:events:519:28)
+    at TLSSocket.emit (node:domain:488:12)
+    at Axios.request (C:\Users\shlom\Documents\image-grnerator\Backend\node_modules\axios\lib\core\Axios.js:45:41)
+    at processTicksAndRejections (node:internal/process/task_queues:95:5)
+---------------------------------------
+
