@@ -1,4 +1,4 @@
-import { Generator } from "../../GeneratorArea/Generator/Generator";
+import { Login } from "../../LoginArea/Login";
 import { Header } from "../Header/Header";
 import "./Layout.css";
 
@@ -9,7 +9,7 @@ export function Layout(): JSX.Element {
         <Header />
       </header>
       <main>
-        <Generator/>
+    <Login/>
       </main>
     </div>
   );

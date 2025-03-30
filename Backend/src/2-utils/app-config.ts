@@ -5,8 +5,6 @@ dotenv.config();
 
 class AppConfig {
     public readonly port = process.env.PORT;
-    public readonly apiKey = process.env.API_KEY;
-    public readonly  dallE3Url = process.env.DALLE3URL;
 
 
 }
