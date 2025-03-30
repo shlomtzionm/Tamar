@@ -5,6 +5,7 @@ dotenv.config();
 
 class AppConfig {
     public readonly port = process.env.PORT;
+    public readonly clientId = process.env.CLIENT_ID;
 
 
 }

@@ -1,9 +1,26 @@
-import { UnauthorizedError, ValidationError } from "../3-models/client-errors";
+import axios from "axios";
+import { appConfig } from "../2-utils/app-config";
+const { OAuth2Client } = require('google-auth-library');
 
 class UserServices {
 
+public async verifyToken(){
+ const   client = new OAuth2Client(appConfig.clientId)
 
+    async function sendToken(req,res){
+const {token} = req.body
+try {
+    const ticker = await client.verifyToken({idToken:token,
+        audience:client
+    })
+} catch (error:any) {
     
+}
+    }
+
+    axios.post('/auth/google')
+}
+
 //   public async register(user: UserModel) {
 
 //     const sql = "insert into users values (default, ?, ?, ?, ?, ?)"
