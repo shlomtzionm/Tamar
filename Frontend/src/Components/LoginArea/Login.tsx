@@ -1,18 +1,21 @@
 import { useState } from "react";
-import { GoogleLogin, GoogleOAuthProvider } from '@react-oauth/google';
+import { GoogleCredentialResponse, GoogleLogin, GoogleOAuthProvider } from '@react-oauth/google';
 import { appConfig } from "../../Utils/AppConfig";
+import { loginServices } from "../../Services/Login/loginServices";
 
 export function Login(): JSX.Element {
 
     const [user,serUser] = useState(null)
 
-   function handleLoginSuccess(){
-console.log('success');
+   async function handleLoginSuccess(res:GoogleCredentialResponse){
+const token = res.credential;
+const data = await loginServices.sendToken(token)
+console.log(data);
 
     }
 
 function handleLoginError(){
-console.log('error');
+console.log('login failed');
 
 }
 
