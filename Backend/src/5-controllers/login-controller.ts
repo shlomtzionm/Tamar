@@ -1,9 +1,9 @@
-import express, { Request, Response } from "express";
-import { Next } from "mysql2/typings/mysql/lib/parsers/typeCast";
+import express, { NextFunction, Request, Response } from "express";
 import { loginServices } from "../4-services/loginServices";
+import { StatusCode } from "../3-models/enums";
 
 // Data controller:
-class GeneratorController {
+class LoginController {
   // Create a router object for listening to HTTP requests:
   public readonly router = express.Router();
 
@@ -14,17 +14,17 @@ class GeneratorController {
 
   // Register routes:
   private registerRoutes(): void {
-    this.router.post("/auth", this.verifyToken);
+    this.router.post("/login", this.login);
     // this.router.post("/image", this.getImage);
   }
 
-  private async verifyToken(request: Request, response: Response, next: Next) {
-    console.log("this is backend");
+  private async login(request: Request, response: Response,next:NextFunction) {
     try {
       const token = request.body.token;
-      const res = await loginServices.verifyToken(token);
+      const res = await loginServices.login(token);
+    response.status(StatusCode.OK).json(res)
     } catch (error: any) {
-      console.log(error);
+      next(error);
     }
   }
 
@@ -38,5 +38,5 @@ class GeneratorController {
   //     }
 }
 
-const generatorController = new GeneratorController();
-export const generatorRouter = generatorController.router;
+const loginController = new LoginController();
+export const loginRouter = loginController.router;

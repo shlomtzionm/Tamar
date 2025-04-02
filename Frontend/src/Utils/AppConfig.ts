@@ -3,7 +3,7 @@ class AppConfig {
     // Backend urls:
     public readonly backendUrl = "http://localhost:4000/api";
 
-    public readonly clientId = '715392575960-42153ingm34tllkfmls3e5p8g3eh4r48.apps.googleusercontent.com'
+    public readonly clientId = '342916761495-jvl1ltkstds2ovb5341j2r7v22rf6pjt.apps.googleusercontent.com'
  
     //Axios options:
     public readonly axiosOptions = {

@@ -3,13 +3,15 @@ import { appConfig } from "../../Utils/AppConfig"
 
  class LoginServices {
 
-public async sendToken(token:string):Promise<string> {
+public async sendToken(token:string):Promise<boolean> {
     try {
-const res = await axios.post(`${appConfig.backendUrl}/auth`,{token})
+const res = await axios.post(`${appConfig.backendUrl}/login`,{token})
 const data= res.data
+console.log(data);
+
 return data   
     } catch (error:any) {
-        console.log("this is catch");
+        console.log(error);
         
     }
 }

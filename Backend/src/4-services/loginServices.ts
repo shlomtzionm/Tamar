@@ -1,74 +1,56 @@
 import { appConfig } from "../2-utils/app-config";
-import { OAuth2Client } from "google-auth-library";
+import { OAuth2Client, TokenPayload } from "google-auth-library";
+import { dal } from "../2-utils/dal";
+import { userServices } from "./userServices";
+import { UserModel } from "../3-models/userModel";
+import { Role } from "../3-models/enums";
 
 class LoginServices {
-  public async verifyToken(token: string) {
-    const client: OAuth2Client = new OAuth2Client(appConfig.clientId);
-console.log(token + "this is the token on login services.");
-
+  public async login(token: string) {
     try {
-      const ticket = await client.verifyIdToken({
-        idToken: token,
-        audience: appConfig.clientId,
-      });
+     
+    const payload = await this.verifyGoogleToken(token);
+    const userData = await this.getUserByEmail(payload.email);
 
-      const payload = ticket.getPayload();
-      console.log(payload);
-    } catch (error) {
-      console.error("Error verifying token:", error);
+    if (userData) {
+      return userData.role == Role.Admin;
+    }
+
+    await this.createNewUser(payload);
+    return false; 
+    } catch (error:any) {
+      console.log("A problem accrued in the process." + error);
+      
     }
   }
-  //   public async register(user: UserModel) {
 
-  //     const sql = "insert into users values (default, ?, ?, ?, ?, ?)"
-  //     user.roleId = Role.User;
-  //     user.validate();
+  private async getUserByEmail(email: string) {
+    const sql = "SELECT * FROM users WHERE email = ?";
+    const [user] = await dal.execute(sql, [email]);
+    return user || null;
+  }
+  private async createNewUser(payload: TokenPayload) {
+    const newUser = new UserModel({
+      first_name: payload.given_name,
+      last_name: payload.family_name,
+      email: payload.email,
+      role: Role.User,
+    });
 
-  //     const emailIsUnique = await this.isEmailUnique(user.email);
-  //     if (!emailIsUnique) {
-  //       throw new ValidationError("Email is already in use.");
-  //     }
+    await userServices.setNewUser(newUser);
+  }
 
-  //   user.password = cyber.hash(user.password)
-  //     const values = [user.firstName ,user.lastName, user.email ,user.password ,user.roleId]
-  //     const info :OkPacketParams = await dal.execute(sql,values)
-  //     user.id = info.insertId;
+  private async verifyGoogleToken(token: string): Promise<TokenPayload> {
+    const client = new OAuth2Client(appConfig.clientId);
 
-  //     const likesSQL = `INSERT INTO likes (userId, vacationId, isLiked)
-  //     SELECT ?, id, false
-  //     FROM vacations;`
-  // const likesValues = [ user.id]
-  // await dal.execute(likesSQL,likesValues)
+    const ticket = await client.verifyIdToken({
+      idToken: token,
+      audience: appConfig.clientId,
+    });
 
-  //     const token = cyber.generateNewToken(user);
-  //     return token;
-  //   }
-
-  //   public async login(credentials: CredentialsModel) {
-
-  //     credentials.password = cyber.hash(credentials.password);
-  //     console.log(cyber.hash(credentials.password))
-  //     const sql = `SELECT * FROM users WHERE email = ? and password = ?`
-
-  // const values = [credentials.email, credentials.password]
-  //   const users = await dal.execute(sql,values);
-  // const user = users[0]
-  //     if(!user) throw new UnauthorizedError("email or password are incorrect")
-  //       const token  = cyber.generateNewToken(user)
-  //     return token
-  //   }
-
-  //   public async getAllUsers() {
-  //     const sql = "select * from users"
-  // const vacations = await dal.execute(sql)
-  // return vacations
-  // }
-
-  // private async isEmailUnique(email: string): Promise<boolean> {
-  //   const sql = "SELECT COUNT(*) AS count FROM users WHERE email = ?";
-  //   const result = await dal.execute(sql, [email]);
-  //   return result[0].count === 0;
-  // }
+    const payload = ticket.getPayload();
+    return payload;
+  }
 }
 
 export const loginServices = new LoginServices();
